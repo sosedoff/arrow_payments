@@ -2,6 +2,8 @@
 
 Ruby wrapper for Arrow Payments gateway
 
+**Under Development**
+
 ## Installation
 
 In your Gemfile add a line:
