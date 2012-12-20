@@ -38,7 +38,13 @@ client.production? # => true
 
 ## Reference
 
-List of all gateway objects
+List of all gateway objects:
+
+- `Customer`      - Gateway customer object
+- `PaymentMethod` - Gateway payment method (credit card) object
+- `Transaction`   - Contains all information about transaction 
+- `Address`       - User for shipping and billing addresses
+- `LineItem`      - Contains information about transaction item
 
 ### Address
 
@@ -61,7 +67,22 @@ List of all gateway objects
 - `recurring_billings` - Array of `RecurringBilling` instances if any
 - `payment_methods` - Array of PaymentMethod instances if any
 
-## LineItem
+### PaymentMethod
+
+- `id`
+- `card_type`
+- `last_digits`
+- `first_name`
+- `last_name`
+- `expiration_month`
+- `expiration_year`
+- `address`
+- `address2`
+- `city`
+- `state`
+- `zip`
+
+### LineItem
 
 - `id`
 - `commodity_code`
