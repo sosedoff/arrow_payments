@@ -36,6 +36,8 @@ client.production? # => true
 
 ## Usage
 
+Check API reference section for objects details. 
+
 Initialize a new client:
 
 ```ruby
@@ -102,6 +104,12 @@ client.void_transaction('45678')
 ```
 
 ## Reference
+
+List of all gateway errors:
+
+- `ArrowPayments::Error` - Raised on invalid data. Generic error.
+- `ArrowPayments::NotFound` - Raised on invalid API token or non-existing object
+- `ArrowPayments::NotImplemented` - Raised when API endpoint is not implemented
 
 List of all gateway objects:
 
