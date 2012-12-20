@@ -38,24 +38,23 @@ module ArrowPayments
     property :card_last_digits,      :from => 'CardLast4'
     property :customer_po_number,    :from => 'CustomerPONumber'
     property :tax_amount,            :from => 'TaxAmount'
-    property :shipping,              :from => 'Shipping'
     property :shipping_amount,       :from => 'ShippingAmount'
     property :shipping_address_id,   :from => 'ShippingAddressID'
     property :shipping_address,      :from => 'Shipping'
     property :customer_id,           :from => 'CustomerID'
     property :customer_name,         :from => 'CustomerName'
     property :line_items,            :from => 'LineItems'
-    property :billing,               :from => 'Billing'
+    property :billing_address,       :from => 'Billing'
 
     def Billing=(data)
       if data.kind_of?(Hash)
-        self.billing = ArrowPayments::Address.new(data)
+        self.billing_address = ArrowPayments::Address.new(data)
       end
     end
 
     def Shipping=(data)
       if data.kind_of?(Hash)
-        self.shipping = ArrowPayments::Address.new(data)
+        self.shipping_address = ArrowPayments::Address.new(data)
       end
     end
 
