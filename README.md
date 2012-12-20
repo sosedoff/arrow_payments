@@ -36,6 +36,71 @@ client.production? # => true
 
 ## Usage
 
+Initialize a new client:
+
+```ruby
+client = ArrowPayments::Client.new(
+  :api_key     => 'foo',
+  :mode        => 'sandbox',
+  :merchant_id => '12345'
+)
+```
+
+### Customers
+
+```ruby
+# Get all customers. 
+# Does not include recurring billings and payment methods.
+client.customers # => [Customer, ...]
+
+# Get customer details. 
+# Returns nil if not found
+client.customer('12345')
+
+# Create a new customer. 
+# Raises ArrowPayments::Error if unable to create.
+customer = client.create_customer(
+  :name => 'John Doe',
+  :contact => 'John Doe',
+  :code => 'JOHN',
+  :email => 'john@doe.com',
+  :phone => '(123) 123-12-12'
+)
+
+# Update a customer
+# NOTE: Not implemented by ArrowPayments
+
+# Delete a customer
+# NOTE: Not implementer by ArrowPayments
+```
+
+### Payments Methods
+
+```ruby
+# TODO
+```
+
+### Transactions
+
+```ruby
+# Get list of transactions by customer. 
+# Only unsettled transactions will be returns as ArrowPayments does not support
+# any other filters for now
+client.transactions('12345')
+
+# Get a single transaction details.
+# Raises ArrowPayments::NotFound if not found
+client.transaction('45678')
+
+# Capture a transaction for a specified amount. 
+# Returns success result or raises ArrowPayments::Error exception
+client.capture_transaction('45678', 123.00)
+
+# Void an existing unsettled transaction
+# Returns a success result or raises ArrowPayments::NotFound if not found
+client.void_transaction('45678')
+```
+
 ## Reference
 
 List of all gateway objects:
