@@ -61,7 +61,7 @@ module ArrowPayments
     def TransactionTime=(data)
       if data =~ /^\/Date\(([\d]+)\)\/$/
         epoch = Integer($1[0..9])
-        self.created_at = Time.at(epoch).to_datetime
+        self.created_at = Time.at(epoch)
       end
     end
   end
