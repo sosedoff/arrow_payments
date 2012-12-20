@@ -23,11 +23,19 @@ module ArrowPayments
       Customer.new(post("/customer/add", customer.to_source_hash))
     end
 
+    # Update an existing customer attributes
+    # @param [Integer] customer ID
+    # @param [Hash] customer attributes
+    # @return [Customer]
+    def update_customer(id, options={})
+      raise ArrowPayments::NotImplemented
+    end
+
     # Delete an existing customer
     # @param [Integer] customer ID
     # @return [Boolean]
     def delete_customer(id)
-      raise "API endpoint is not implemented"
+      raise ArrowPayments::NotImplemented
     end
   end
 end

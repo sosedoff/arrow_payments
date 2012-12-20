@@ -4,4 +4,7 @@ module ArrowPayments
 
   # Error when API entity is not found
   class NotFound < Error ; end
+
+  # Error when API endpoint or method is not implemented
+  class NotImplemented < Error ; end
 end
