@@ -1,5 +1,7 @@
 module ArrowPayments
   class PaymentMethod < Entity
+    attr_accessor :number, :security_code
+
     property :id,               :from => 'ID'
     property :card_type,        :from => 'CardType'
     property :last_digits,      :from => 'Last4'
