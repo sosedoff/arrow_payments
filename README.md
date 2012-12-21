@@ -78,8 +78,37 @@ customer = client.create_customer(
 
 ### Payments Methods
 
+Example: Add a new payment method to an existing customer
+
 ```ruby
-# TODO
+client_id = '12345'
+
+address = {
+  :address  => 'Some Street',
+  :address2 => 'Apt 1',
+  :city     => 'Chicago',
+  :state    => 'IL',
+  :zip      => '60657',
+  :phone    => '123123123'
+}
+
+cc = ArrowPayments::PaymentMethod.new(
+  :first_name       => 'John',
+  :last_name        => 'Doe',
+  :number           => '4111111111111111',
+  :security_code    => '123',
+  :expiration_month => 12,
+  :expiration_year  => 14
+)
+
+# Initialize payment method
+url = client.payment_method_start(customer_id, address)
+
+# Setup credit card
+token = client.payment_method_setup(url, cc)
+
+# Finalize payment method creation
+cc = client.payment_method_complete(token)
 ```
 
 ### Transactions
