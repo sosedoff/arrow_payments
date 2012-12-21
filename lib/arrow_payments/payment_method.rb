@@ -1,7 +1,5 @@
 module ArrowPayments
   class PaymentMethod < Entity
-    attr_accessor :number, :security_code
-
     property :id,               :from => 'ID'
     property :card_type,        :from => 'CardType'
     property :last_digits,      :from => 'Last4'
@@ -14,5 +12,8 @@ module ArrowPayments
     property :city,             :from => 'BillingCity'
     property :state,            :from => 'BillingState'
     property :zip,              :from => 'BillingZip'
+
+    property :number
+    property :security_code
   end
 end

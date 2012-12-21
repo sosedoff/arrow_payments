@@ -7,4 +7,7 @@ module ArrowPayments
 
   # Error when API endpoint or method is not implemented
   class NotImplemented < Error ; end
+
+  # Bad request error, does not contain a message
+  class BadRequest < Error ; end
 end

@@ -14,6 +14,11 @@ module ArrowPayments
       request(:post, path, params, raw)
     end
 
+    def post_to_url(url, params)
+      puts params.inspect
+      Faraday.post(url, params)
+    end
+
     protected
 
     def request(method, path, params={}, raw=false)
@@ -33,13 +38,15 @@ module ArrowPayments
 
       unless response.success?
         case response.status
-          when 404
-            raise ArrowPayments::NotFound, response.headers['error']
-          when 500
-            raise ArrowPayments::Error, response.headers['error']
+        when 400
+          raise ArrowPayments::BadRequest
+        when 404
+          raise ArrowPayments::NotFound, response.headers['error']
+        when 500
+          raise ArrowPayments::Error, response.headers['error']
         end
       end
- 
+
       raw ? response : JSON.parse(response.body)
     end
 
