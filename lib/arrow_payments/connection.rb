@@ -39,7 +39,7 @@ module ArrowPayments
       unless response.success?
         case response.status
         when 400
-          raise ArrowPayments::BadRequest
+          raise ArrowPayments::BadRequest, response.headers['error']
         when 404
           raise ArrowPayments::NotFound, response.headers['error']
         when 500
