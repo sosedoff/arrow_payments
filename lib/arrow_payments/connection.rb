@@ -23,7 +23,9 @@ module ArrowPayments
     def request(method, path, params={}, raw=false)
       if method == :post
         path = "/api#{path}"
+        
         params['ApiKey'] = api_key
+        params['MID'] = merchant_id
       else
         path = "/api/#{api_key}#{path}"
       end

@@ -1,5 +1,13 @@
 module ArrowPayments
   module PaymentMethods
+    # Get a single payment method
+    # @param [Integer] customer ID
+    # @param [Integer] payment method ID
+    # @return [PaymentMethod] payment method instance
+    def payment_method(customer_id, id)
+      customer(customer_id).payment_methods.select { |cc| cc.id == id }.first
+    end
+
     # Start a new payment method
     # @param [Integer] customer ID
     # @param [Address] billing address instance

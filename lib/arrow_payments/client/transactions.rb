@@ -22,6 +22,28 @@ module ArrowPayments
       resp['Transactions'].map { |t| Transaction.new(t) }
     end
 
+    # Create a new transaction
+    # @param [Integer] customer ID
+    # @param [Integer] customer payment method ID
+    # @param [Transaction] transaction instance
+    # @return [Transaction]
+    def create_transaction(customer_id, payment_method_id, transaction)
+      if transaction.kind_of?(Hash)
+        transaction = ArrowPayments::Transaction.new(transaction)
+      end
+
+      params = transaction.to_source_hash
+      params['Amount'] = params['TotalAmount']
+
+      resp = post('/transaction/add', params)
+
+      if resp['Success'] == true
+        ArrowPayments::Transaction.new(resp)
+      else
+        raise ArrowPayments::Error, resp['Message']
+      end
+    end
+
     # Capture an unsettled transaction
     # @param [String] transaction ID
     # @param [Integer] amount, less than or equal to original amount
@@ -34,7 +56,7 @@ module ArrowPayments
     # Void a previously submitted transaction that have not yet settled
     # @param [String] transaction ID
     # @return [Boolean]
-    def void_transactions(id)
+    def void_transaction(id)
       resp = post('/transaction/void', 'TransactionId' => id)
       resp['Success'] == true
     end
