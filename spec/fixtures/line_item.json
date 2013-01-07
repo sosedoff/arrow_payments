@@ -1,0 +1,8 @@
+{
+  "ID": 12345,
+  "CommodityCode": "CODE",
+  "Description": "Product description",
+  "Price": 10.45,
+  "ProductCode": "PRODUCT_CODE",
+  "UnitOfMeasure": "EA"
+}

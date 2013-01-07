@@ -58,6 +58,12 @@ module ArrowPayments
       end
     end
 
+    def LineItems=(data)
+      if data.kind_of?(Array)
+        self.line_items = data.map { |hash| ArrowPayments::LineItem.new(hash) }
+      end
+    end
+
     def TransactionTime=(data)
       if data =~ /^\/Date\(([\d]+)\)\/$/
         epoch = Integer($1[0..9])

@@ -15,7 +15,6 @@ module ArrowPayments
     end
 
     def post_to_url(url, params)
-      puts params.inspect
       Faraday.post(url, params)
     end
 
