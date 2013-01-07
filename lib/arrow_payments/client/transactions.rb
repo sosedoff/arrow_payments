@@ -23,14 +23,14 @@ module ArrowPayments
     end
 
     # Create a new transaction
-    # @param [Integer] customer ID
-    # @param [Integer] customer payment method ID
-    # @param [Transaction] transaction instance
     # @return [Transaction]
-    def create_transaction(customer_id, payment_method_id, transaction)
+    def create_transaction(transaction)
       if transaction.kind_of?(Hash)
         transaction = ArrowPayments::Transaction.new(transaction)
       end
+
+      # Set default transaction attributes
+      transaction.transaction_source = 'API'
 
       params = transaction.to_source_hash
       params['Amount'] = params['TotalAmount']
