@@ -245,3 +245,11 @@ To run a test suite:
 ```
 rake test
 ```
+
+## TODO
+
+There are multiple features that are pending implementation:
+
+- Edit and delete customer information
+- Delete customer payment methods
+- Filter transactions by status
