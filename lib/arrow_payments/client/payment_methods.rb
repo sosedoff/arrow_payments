@@ -55,6 +55,13 @@ module ArrowPayments
       ArrowPayments::PaymentMethod.new(resp)
     end
 
+    # Delete an existing payment method
+    # @param [Integer] customer ID
+    # @param [Integer] payment method ID
+    def delete_payment_method(customer_id, id)
+      raise ArrowPayments::NotImplemented
+    end
+
     private
 
     def payment_method_form(cc)
