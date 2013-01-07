@@ -49,6 +49,10 @@ describe ArrowPayments::Transactions do
     end
   end
 
+  describe '#create_transaction' do
+    pending
+  end
+
   describe '#capture_transaction' do
     it 'raises error if transaction does not exist' do
       stub_request(:post, "http://demo.arrowpayments.com/api/transaction/capture?Amount=100&ApiKey=foobar&MID=foo&TransactionId=10162").
@@ -65,9 +69,27 @@ describe ArrowPayments::Transactions do
 
       client.capture_transaction(10162, 100).should be_true
     end
+
+    it 'raises a error if amount is greater than original' do
+      pending
+    end
+
+    it 'raises an error if transaction is already captured' do
+      pending
+    end
   end
 
   describe '#void_transaction' do
-    pending
+    it 'raises an error if transaction does not exist' do
+      pending
+    end
+
+    it 'voids transaction' do
+      pending
+    end
+
+    it 'raises an error if transaction is already voided' do
+      pending
+    end
   end
 end
