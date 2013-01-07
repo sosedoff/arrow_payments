@@ -5,6 +5,7 @@ describe ArrowPayments::Transactions do
 
   before :all do
     ArrowPayments::Configuration.api_key = 'foobar'
+    ArrowPayments::Configuration.merchant_id = 'foo'
     ArrowPayments::Configuration.mode = 'sandbox'
   end
 
@@ -50,16 +51,16 @@ describe ArrowPayments::Transactions do
 
   describe '#capture_transaction' do
     it 'raises error if transaction does not exist' do
-      stub_request(:post, "http://demo.arrowpayments.com/api/transaction/capture?Amount=100&ApiKey=foobar&TransactionId=10162").
-        with(:body => {"Amount"=>"100", "ApiKey"=>"foobar", "TransactionId"=>"10162"}).
+      stub_request(:post, "http://demo.arrowpayments.com/api/transaction/capture?Amount=100&ApiKey=foobar&MID=foo&TransactionId=10162").
+        with(:body => {"Amount"=>"100", "ApiKey"=>"foobar", "MID" => "foo", "TransactionId"=>"10162"}).
         to_return(:status => 404, :body => "", :headers => {:error => "Transaction Not Found"})
 
       expect { client.capture_transaction(10162, 100) }.to raise_error "Transaction Not Found"
     end
 
     it 'captures transaction for amount' do
-      stub_request(:post, "http://demo.arrowpayments.com/api/transaction/capture?Amount=100&ApiKey=foobar&TransactionId=10162").
-        with(:body => {"Amount"=>"100", "ApiKey"=>"foobar", "TransactionId"=>"10162"}).
+      stub_request(:post, "http://demo.arrowpayments.com/api/transaction/capture?Amount=100&ApiKey=foobar&MID=foo&TransactionId=10162").
+        with(:body => {"Amount"=>"100", "ApiKey"=>"foobar", "MID" => "foo", "TransactionId"=>"10162"}).
         to_return(:status => 200, :body => fixture('transaction_capture.json'), :headers => {})
 
       client.capture_transaction(10162, 100).should be_true
