@@ -54,8 +54,11 @@ describe ArrowPayments::Customers do
     end
 
     it 'creates and returns a new customer' do
-      stub_request(:post, "http://demo.arrowpayments.com/api/customer/add?ApiKey=foobar&MID=foo&Code=First%20Supplies&Name=First%20Supplies&PrimaryContact=John%20Peoples&PrimaryContactEmailAddress=John.Peoples@arrow-test.com&PrimaryContactPhone=8325539616").
-        with(:body => {"ApiKey"=>"foobar", "MID" => "foo", "Code"=>"First Supplies", "Name"=>"First Supplies", "PrimaryContact"=>"John Peoples", "PrimaryContactEmailAddress"=>"John.Peoples@arrow-test.com", "PrimaryContactPhone"=>"8325539616"}).
+      stub_request(:post, "http://demo.arrowpayments.com/api/customer/add").
+        with(
+          :body => "{\"Name\":\"First Supplies\",\"Code\":\"First Supplies\",\"PrimaryContact\":\"John Peoples\",\"PrimaryContactPhone\":\"8325539616\",\"PrimaryContactEmailAddress\":\"John.Peoples@arrow-test.com\",\"PaymentMethods\":[],\"ApiKey\":\"foobar\",\"MID\":\"foo\"}",
+          :headers => {'Accept'=>'application/json', 'Content-Type'=>'application/json', 'User-Agent'=>'Ruby'}
+        ).
         to_return(:status => 200, :body => fixture('customer.json'), :headers => {})
 
       new_customer = client.create_customer(customer)
@@ -63,8 +66,11 @@ describe ArrowPayments::Customers do
     end
 
     it 'raises error when unable to create' do
-      stub_request(:post, "http://demo.arrowpayments.com/api/customer/add?ApiKey=foobar&MID=foo&Code=First%20Supplies&Name=First%20Supplies&PrimaryContact=John%20Peoples&PrimaryContactEmailAddress=John.Peoples@arrow-test.com&PrimaryContactPhone=8325539616").
-        with(:body => {"ApiKey"=>"foobar", "MID" => "foo", "Code"=>"First Supplies", "Name"=>"First Supplies", "PrimaryContact"=>"John Peoples", "PrimaryContactEmailAddress"=>"John.Peoples@arrow-test.com", "PrimaryContactPhone"=>"8325539616"}).
+      stub_request(:post, "http://demo.arrowpayments.com/api/customer/add").
+        with(
+          :body => "{\"Name\":\"First Supplies\",\"Code\":\"First Supplies\",\"PrimaryContact\":\"John Peoples\",\"PrimaryContactPhone\":\"8325539616\",\"PrimaryContactEmailAddress\":\"John.Peoples@arrow-test.com\",\"PaymentMethods\":[],\"ApiKey\":\"foobar\",\"MID\":\"foo\"}",
+          :headers => {'Accept'=>'application/json', 'Content-Type'=>'application/json', 'User-Agent'=>'Ruby'}
+        ).
         to_return(:status => 500, :body => "", :headers => {:error => "Customer with Name First Supplies already exists for merchant"})
 
       expect { client.create_customer(customer) }.to raise_error ArrowPayments::Error, 'Customer with Name First Supplies already exists for merchant'
