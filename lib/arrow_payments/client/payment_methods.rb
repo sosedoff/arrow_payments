@@ -56,10 +56,11 @@ module ArrowPayments
     end
 
     # Delete an existing payment method
-    # @param [Integer] customer ID
     # @param [Integer] payment method ID
-    def delete_payment_method(customer_id, id)
-      raise ArrowPayments::NotImplemented
+    # @return [Boolean]
+    def delete_payment_method(id)
+      resp = post('/paymentmethod/delete', 'PaymentMethodId' => id)
+      resp['Success'] == true
     end
 
     private
