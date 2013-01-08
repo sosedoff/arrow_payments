@@ -75,9 +75,15 @@ customer = client.create_customer(
   :email => 'john@doe.com',
   :phone => '(123) 123-12-12'
 )
-```
 
-Updating and deleting customers is not yet implemented by ArrowPayments.
+# Update an existing customer
+customer = client.customer('12345')
+customer.name = 'Foo Bar'
+client.update_customer(customer) # => true
+
+# Delete an existing customer
+client.delete_customer('12345') # => true
+```
 
 ### Payment Methods
 
@@ -114,6 +120,9 @@ token = client.payment_method_setup(url, cc)
 
 # Step 3: Finalize payment method creation
 cc = client.payment_method_complete(token)
+
+# Delete an existing payment method
+client.delete_payment_method('123456') # => true
 ```
 
 ### Transactions
@@ -250,6 +259,4 @@ rake test
 
 There are multiple features that are pending implementation:
 
-- Edit and delete customer information
-- Delete customer payment methods
 - Filter transactions by status
