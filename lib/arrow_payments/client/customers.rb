@@ -24,18 +24,22 @@ module ArrowPayments
     end
 
     # Update an existing customer attributes
-    # @param [Integer] customer ID
-    # @param [Hash] customer attributes
-    # @return [Customer]
-    def update_customer(id, options={})
-      raise ArrowPayments::NotImplemented
+    # @param [Customer] customer instance
+    # @return [Boolean] update result
+    def update_customer(customer)
+      params = customer.to_source_hash
+      params['CustomerID'] = customer.id
+
+      resp = post('/customer/update', params)
+      resp['Success'] == true
     end
 
     # Delete an existing customer
     # @param [Integer] customer ID
     # @return [Boolean]
     def delete_customer(id)
-      raise ArrowPayments::NotImplemented
+      resp = post('/customer/delete', 'CustomerID' => id)
+      resp['Success'] == true
     end
   end
 end
