@@ -30,11 +30,23 @@ module ArrowPayments
         path = "/api/#{api_key}#{path}"
       end
 
-      headers = {'Accept' => 'application/json'}
+      headers = {
+        'Accept'       => 'application/json',
+        'Content-Type' => 'application/json'
+      }
+
       api_url = production? ? API_PRODUCTION : API_SANDBOX
 
       response = connection(api_url).send(method, path, params) do |request|
-        request.url(path, params)
+        request.headers = headers
+
+        case method
+        when :get, :delete
+          request.url(path, params)
+        when :post, :put
+          request.path = path
+          request.body = params.to_json
+        end
       end
 
       unless response.success?
