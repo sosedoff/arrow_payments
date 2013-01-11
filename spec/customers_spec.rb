@@ -77,7 +77,27 @@ describe ArrowPayments::Customers do
     end
   end
 
+  describe '#update_customer' do
+    it 'raises error if customer does not exist' do
+      pending
+    end
+
+    it 'raises error if customer is not valid' do
+      pending
+    end
+
+    it 'returns true if customer was updated' do
+      pending
+    end
+  end
+
   describe '#delete_customer' do
-    pending 'endpoint is not implemented'
+    it 'raises error if customer does not exist' do
+      pending
+    end
+
+    it 'returns true if customer was deleted' do
+      pending
+    end
   end
 end

@@ -27,6 +27,10 @@ module ArrowPayments
         raise ArgumentError, "API key required"
       end
 
+      if merchant_id.to_s.empty?
+        raise ArgumentError, "Merchant ID required"
+      end
+
       unless %(sandbox production).include?(mode)
         raise ArgumentError, "Invalid mode: #{mode}"
       end

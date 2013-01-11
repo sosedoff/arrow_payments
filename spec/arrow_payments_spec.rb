@@ -13,6 +13,7 @@ describe ArrowPayments do
       client.api_key.should eq('foo')
       client.mode.should eq('production')
       client.merchant_id.should eq(12345)
+      client.debug.should eq(false)
     end
 
     context 'when preconfigured' do

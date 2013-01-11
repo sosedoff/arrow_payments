@@ -50,14 +50,7 @@ module ArrowPayments
       end
 
       unless response.success?
-        case response.status
-        when 400
-          raise ArrowPayments::BadRequest, response.headers['error']
-        when 404
-          raise ArrowPayments::NotFound, response.headers['error']
-        when 500
-          raise ArrowPayments::Error, response.headers['error']
-        end
+        handle_failed_response(response)        
       end
 
       raw ? response : JSON.parse(response.body)
@@ -68,6 +61,17 @@ module ArrowPayments
         c.use(Faraday::Request::UrlEncoded)
         c.use(Faraday::Response::Logger) if debug?
         c.adapter(Faraday.default_adapter)
+      end
+    end
+
+    def handle_failed_response(response)
+      case response.status
+      when 400
+        raise ArrowPayments::BadRequest, response.headers['error']
+      when 404
+        raise ArrowPayments::NotFound, response.headers['error']
+      when 500
+        raise ArrowPayments::Error, response.headers['error']
       end
     end
   end
