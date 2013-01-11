@@ -79,25 +79,82 @@ describe ArrowPayments::Customers do
 
   describe '#update_customer' do
     it 'raises error if customer does not exist' do
-      pending
+      stub_request(:get, "http://demo.arrowpayments.com/api/foobar/customer/10162").
+        to_return(:status => 200, :body => fixture('customer.json'))
+
+      stub_request(:post, "http://demo.arrowpayments.com/api/customer/update").
+        with(
+          :body => "{\"ID\":\"10163\",\"Name\":\"Foobar\",\"Code\":\"First Supplies\",\"PrimaryContact\":\"John Peoples\",\"PrimaryContactPhone\":\"8325539616\",\"PrimaryContactEmailAddress\":\"John.Peoples@arrow-test.com\",\"RecurrentBilling\":[],\"PaymentMethods\":[{\"ID\":12436,\"CardType\":\"Visa\",\"Last4\":\"1111\",\"CardholderFirstName\":\"Paola\",\"CardholderLastName\":\"Chen\",\"ExpirationMonth\":6,\"ExpirationYear\":2015,\"BillingStreet1\":\"7495 Center St.\",\"BillingCity\":\"Chicago\",\"BillingState\":\"IL\",\"BillingZip\":\"60601\"}],\"CustomerID\":\"10163\",\"ApiKey\":\"foobar\",\"MID\":\"foo\"}",
+          :headers => {'Accept'=>'application/json', 'Content-Type'=>'application/json', 'User-Agent'=>'Ruby'}
+        ).
+        to_return(:status => 404, :body => "", :headers => {:error => "Customer Not Found"})
+
+      customer = client.customer('10162')
+      customer.id = '10163'
+      customer.name = 'Foobar'
+
+      expect { client.update_customer(customer) }.
+        to raise_error ArrowPayments::NotFound, 'Customer Not Found'
     end
 
     it 'raises error if customer is not valid' do
-      pending
+      stub_request(:get, "http://demo.arrowpayments.com/api/foobar/customer/10162").
+        to_return(:status => 200, :body => fixture('customer.json'))
+
+      stub_request(:post, "http://demo.arrowpayments.com/api/customer/update").
+        with(
+          :body => "{\"ID\":10162,\"Name\":\"Foobar\",\"Code\":\"First Supplies\",\"PrimaryContact\":\"John Peoples\",\"PrimaryContactPhone\":\"8325539616\",\"PrimaryContactEmailAddress\":\"John.Peoples@arrow-test.com\",\"RecurrentBilling\":[],\"PaymentMethods\":[{\"ID\":12436,\"CardType\":\"Visa\",\"Last4\":\"1111\",\"CardholderFirstName\":\"Paola\",\"CardholderLastName\":\"Chen\",\"ExpirationMonth\":6,\"ExpirationYear\":2015,\"BillingStreet1\":\"7495 Center St.\",\"BillingCity\":\"Chicago\",\"BillingState\":\"IL\",\"BillingZip\":\"60601\"}],\"CustomerID\":10162,\"ApiKey\":\"foobar\",\"MID\":\"foo\"}",
+          :headers => {'Accept'=>'application/json', 'Content-Type'=>'application/json', 'User-Agent'=>'Ruby'}
+        ).
+        to_return(:status => 500, :body => "", :headers => {:error => "Customer with Name Foobar already exists for merchant"})
+
+      customer = client.customer('10162')
+      customer.name = 'Foobar'
+
+      expect { client.update_customer(customer) }.
+        to raise_error ArrowPayments::Error, 'Customer with Name Foobar already exists for merchant'
     end
 
     it 'returns true if customer was updated' do
-      pending
+      stub_request(:get, "http://demo.arrowpayments.com/api/foobar/customer/10162").
+        to_return(:status => 200, :body => fixture('customer.json'))
+
+      stub_request(:post, "http://demo.arrowpayments.com/api/customer/update").
+        with(
+          :body => "{\"ID\":10162,\"Name\":\"Foobar\",\"Code\":\"First Supplies\",\"PrimaryContact\":\"John Peoples\",\"PrimaryContactPhone\":\"8325539616\",\"PrimaryContactEmailAddress\":\"John.Peoples@arrow-test.com\",\"RecurrentBilling\":[],\"PaymentMethods\":[{\"ID\":12436,\"CardType\":\"Visa\",\"Last4\":\"1111\",\"CardholderFirstName\":\"Paola\",\"CardholderLastName\":\"Chen\",\"ExpirationMonth\":6,\"ExpirationYear\":2015,\"BillingStreet1\":\"7495 Center St.\",\"BillingCity\":\"Chicago\",\"BillingState\":\"IL\",\"BillingZip\":\"60601\"}],\"CustomerID\":10162,\"ApiKey\":\"foobar\",\"MID\":\"foo\"}",
+          :headers => {'Accept'=>'application/json', 'Content-Type'=>'application/json', 'User-Agent'=>'Ruby'}
+        ).
+        to_return(:status => 200, :body => {'Success' => true}.to_json)
+
+      customer = client.customer('10162')
+      customer.name = 'Foobar'
+
+      client.update_customer(customer).should be_true
     end
   end
 
   describe '#delete_customer' do
     it 'raises error if customer does not exist' do
-      pending
+      stub_request(:post, "http://demo.arrowpayments.com/api/customer/delete").
+        with(
+          :body => "{\"CustomerID\":10162,\"ApiKey\":\"foobar\",\"MID\":\"foo\"}",
+          :headers => {'Accept'=>'application/json', 'Content-Type'=>'application/json', 'User-Agent'=>'Ruby'}
+        ).
+        to_return(:status => 404, :body => "", :headers => {:error => "Customer Not Found"})
+
+      expect { client.delete_customer(10162) }.
+        to raise_error ArrowPayments::NotFound, 'Customer Not Found'
     end
 
     it 'returns true if customer was deleted' do
-      pending
+      stub_request(:post, "http://demo.arrowpayments.com/api/customer/delete").
+        with(
+          :body => "{\"CustomerID\":10162,\"ApiKey\":\"foobar\",\"MID\":\"foo\"}",
+          :headers => {'Accept'=>'application/json', 'Content-Type'=>'application/json', 'User-Agent'=>'Ruby'}
+        ).
+        to_return(:status => 200, :body => {'Success' => true}.to_json)
+
+      client.delete_customer(10162).should be_true
     end
   end
 end
