@@ -127,7 +127,7 @@ client.delete_payment_method('123456') # => true
 
 You can also create a payment method using a wrapper method:
 
-```
+```ruby
 address = ArrowPayments::Address.new( ... data ... )
 cc      = ArrowPayments::PaymentMethod.new( ... data ... )
 
