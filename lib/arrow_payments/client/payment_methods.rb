@@ -55,6 +55,18 @@ module ArrowPayments
       ArrowPayments::PaymentMethod.new(resp)
     end
 
+    # Create a new payment method. This is a wrapper on top of 3 step process
+    # @param [Integer] customer ID
+    # @param [Address] credit card address
+    # @param [PaymentMethod] credit card
+    # @return [PaymentMethod]
+    def create_payment_method(customer_id, address, card)
+      url   = start_payment_method(customer_id, address)
+      token = setup_payment_method(url, card)
+      
+      complete_payment_method(token)
+    end
+
     # Delete an existing payment method
     # @param [Integer] payment method ID
     # @return [Boolean]
