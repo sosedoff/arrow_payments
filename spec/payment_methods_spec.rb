@@ -101,4 +101,29 @@ describe ArrowPayments::PaymentMethods do
       card.id.should eq(14240)
     end
   end
+
+  describe '#destroy_payment_method' do
+    it 'raises error if payment method does not exist' do
+      stub_request(:post, "http://demo.arrowpayments.com/api/paymentmethod/delete").
+        with(
+          :body => "{\"PaymentMethodId\":12345,\"ApiKey\":\"foobar\",\"MID\":\"foo\"}",
+          :headers => {'Accept'=>'application/json', 'Content-Type'=>'application/json', 'User-Agent'=>'Ruby'}
+        ).
+        to_return(:status => 404, :body => "", :headers => {:error => 'Payment Method Not Found'})
+
+      expect { client.delete_payment_method(12345) }.
+        to raise_error ArrowPayments::NotFound, 'Payment Method Not Found'
+    end
+
+    it 'returns true if payment methods was deleted' do
+      stub_request(:post, "http://demo.arrowpayments.com/api/paymentmethod/delete").
+      with(
+        :body => "{\"PaymentMethodId\":12345,\"ApiKey\":\"foobar\",\"MID\":\"foo\"}",
+        :headers => {'Accept'=>'application/json', 'Content-Type'=>'application/json', 'User-Agent'=>'Ruby'}
+      ).
+      to_return(:status => 200, :body => {'Success' => true}.to_json, :headers => {})
+
+      client.delete_payment_method(12345).should be_true
+    end
+  end 
 end
