@@ -113,13 +113,13 @@ cc = ArrowPayments::PaymentMethod.new(
 )
 
 # Step 1: Provide payment method customer and billing address
-url = client.payment_method_start(customer_id, address)
+url = client.start_payment_method(customer_id, address)
 
 # Step 2: Add credit card information
-token = client.payment_method_setup(url, cc)
+token = client.setup_payment_method(url, cc)
 
 # Step 3: Finalize payment method creation
-cc = client.payment_method_complete(token)
+cc = client.complete_payment_methodtoken)
 
 # Delete an existing payment method
 client.delete_payment_method('123456') # => true

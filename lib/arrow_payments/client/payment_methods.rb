@@ -13,7 +13,7 @@ module ArrowPayments
     # @param [Address] billing address instance
     # @param [String] return url
     # @return [String] payment method form url
-    def payment_method_start(customer_id, billing_address, return_url=nil)
+    def start_payment_method(customer_id, billing_address, return_url=nil)
       if billing_address.kind_of?(Hash)
         billing_address = ArrowPayments::Address.new(billing_address)
       end
@@ -36,7 +36,7 @@ module ArrowPayments
     # @param [String] payment method form url
     # @param [PaymentMethod] payment method instance or hash
     # @return [String] confirmation token
-    def payment_method_setup(form_url, payment_method)
+    def setup_payment_method(form_url, payment_method)
       cc = payment_method
 
       if payment_method.kind_of?(Hash)
@@ -50,7 +50,7 @@ module ArrowPayments
     # Complete payment method creation
     # @param [String] token ID
     # @return [PaymentMethod]
-    def payment_method_complete(token_id)
+    def complete_payment_method(token_id)
       resp = post('/paymentmethod/complete', 'TokenID' => token_id)
       ArrowPayments::PaymentMethod.new(resp)
     end
