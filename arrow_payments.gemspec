@@ -15,7 +15,7 @@ Gem::Specification.new do |s|
   
   s.add_runtime_dependency 'faraday',            '~> 0.8'
   s.add_runtime_dependency 'faraday_middleware', '~> 0.8'
-  s.add_runtime_dependency 'hashie',             '~> 2.0.0.beta'
+  s.add_runtime_dependency 'hashie',             '~> 2.0'
   s.add_runtime_dependency 'json',               '~> 1.7'
 
   s.files         = `git ls-files`.split("\n")
