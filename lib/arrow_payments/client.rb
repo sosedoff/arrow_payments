@@ -21,7 +21,7 @@ module ArrowPayments
       @api_key     = options[:api_key] || ArrowPayments::Configuration.api_key
       @mode        = (options[:mode] || ArrowPayments::Configuration.mode || 'production').to_s
       @merchant_id = options[:merchant_id] || ArrowPayments::Configuration.merchant_id
-      @debug       = options[:debug] == true
+      @debug       = (options[:debug] || ArrowPayments::Configuration.debug) === true
 
       if api_key.to_s.empty?
         raise ArgumentError, "API key required"

@@ -7,6 +7,7 @@ describe ArrowPayments::PaymentMethods do
     ArrowPayments::Configuration.api_key = 'foobar'
     ArrowPayments::Configuration.merchant_id = 'foo'
     ArrowPayments::Configuration.mode = 'sandbox'
+    ArrowPayments::Configuration.debug = false
   end
 
   describe '#start_payment_method' do

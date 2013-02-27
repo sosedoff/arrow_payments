@@ -21,4 +21,11 @@ describe ArrowPayments::Configuration do
       ArrowPayments::Configuration.merchant_id.should eq(12345)
     end
   end
+
+  describe '#debug=' do
+    it 'sets debug mode' do
+      ArrowPayments::Configuration.debug = true
+      ArrowPayments::Configuration.debug.should be_true
+    end
+  end
 end
