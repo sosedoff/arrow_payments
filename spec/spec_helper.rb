@@ -5,6 +5,9 @@ require 'webmock/rspec'
 require 'json'
 require 'lib/arrow_payments'
 
+
+API_ROOT = "http://demo.arrowpayments.com/api"
+
 def fixture_path(filename=nil)
   path = File.expand_path("../fixtures", __FILE__)
   filename.nil? ? path : File.join(path, filename)
