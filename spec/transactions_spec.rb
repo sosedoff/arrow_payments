@@ -11,7 +11,7 @@ describe ArrowPayments::Transactions do
 
   describe '#transaction' do
     it 'returns a transaction by ID' do
-      stub_request(:get, "#{API_ROOT}/foobar/transaction/40023").
+      stub_request(:get, "#{api_url}/foobar/transaction/40023").
         to_return(:status  => 200,
                   :body    => fixture('transaction.json'),
                   :headers => {})
@@ -23,7 +23,7 @@ describe ArrowPayments::Transactions do
     end
 
     it 'returns nil if transaction does not exist' do
-      stub_request(:get, "#{API_ROOT}/foobar/transaction/400231").
+      stub_request(:get, "#{api_url}/foobar/transaction/400231").
         to_return(:status  => 404,
                   :body    => "",
                   :headers => {:error => "Transaction Not Found"})
@@ -38,7 +38,7 @@ describe ArrowPayments::Transactions do
     end
 
     it 'returns unsettled transactions' do
-      stub_request(:get, "#{API_ROOT}/foobar/customer/10162/Transactions/NotSettled").
+      stub_request(:get, "#{api_url}/foobar/customer/10162/Transactions/NotSettled").
         to_return(:status  => 200,
                   :body    => fixture('transactions.json'),
                   :headers => {})
@@ -75,7 +75,7 @@ describe ArrowPayments::Transactions do
     end
 
     it "creates a new transaction record" do
-      stub_request(:post, "#{API_ROOT}/transaction/add").with(request).
+      stub_request(:post, "#{api_url}/transaction/add").with(request).
         to_return(:status  => 200, 
                   :body    => fixture('transaction.json'), 
                   :headers => {})
@@ -88,7 +88,7 @@ describe ArrowPayments::Transactions do
     end
 
     it "raises an error if the payment method is not found" do
-      stub_request(:post, "#{API_ROOT}/transaction/add").with(request).
+      stub_request(:post, "#{api_url}/transaction/add").with(request).
         to_return(:status => 404, 
                   :body => "", 
                   :headers => {:error => "Payment Method Not Found"})
@@ -106,7 +106,7 @@ describe ArrowPayments::Transactions do
     end
 
     it 'raises error if transaction does not exist' do
-      stub_request(:post, "#{API_ROOT}/transaction/capture").with(request).
+      stub_request(:post, "#{api_url}/transaction/capture").with(request).
         to_return(:status  => 404,
                   :body    => "",
                   :headers => {:error => "Transaction Not Found"})
@@ -115,7 +115,7 @@ describe ArrowPayments::Transactions do
     end
 
     it 'captures transaction for amount' do
-      stub_request(:post, "#{API_ROOT}/transaction/capture").with(request).
+      stub_request(:post, "#{api_url}/transaction/capture").with(request).
         to_return(:status  => 200,
                   :body    => fixture('transaction_capture.json'),
                   :headers => {})
@@ -125,7 +125,7 @@ describe ArrowPayments::Transactions do
 
     it 'raises a error if amount is greater than original' do
 
-      stub_request(:post, "#{API_ROOT}/transaction/capture").with(request).
+      stub_request(:post, "#{api_url}/transaction/capture").with(request).
         to_return(:status  => 400,
                   :body    => "",
                   :headers => {:error => "Unable to Capture for more than the original amount of $10.00"})
@@ -134,7 +134,7 @@ describe ArrowPayments::Transactions do
     end
 
     it 'raises an error if transaction is already captured' do
-      stub_request(:post, "#{API_ROOT}/transaction/capture").with(request).
+      stub_request(:post, "#{api_url}/transaction/capture").with(request).
         to_return(:status  => 400,
                   :body    => "",
                   :headers => {:error => "Transaction is Captured Already"})
@@ -154,7 +154,7 @@ describe ArrowPayments::Transactions do
 
     context "successful request" do
       it 'voids transaction' do
-        stub_request(:post, "#{API_ROOT}/transaction/void").with(request).
+        stub_request(:post, "#{api_url}/transaction/void").with(request).
           to_return(:status  => 200, 
                     :body    => fixture("void_transaction.json"), 
                     :headers => {})
@@ -165,7 +165,7 @@ describe ArrowPayments::Transactions do
 
     context "unsuccessful requests" do
       it 'raises an error if transaction does not exist' do
-        stub_request(:post, "#{API_ROOT}/transaction/void").with(request).
+        stub_request(:post, "#{api_url}/transaction/void").with(request).
           to_return(:status  => 404, 
                     :body    => "", 
                     :headers => {:error => "Transaction Not Found"})
@@ -174,7 +174,7 @@ describe ArrowPayments::Transactions do
       end
 
       it 'raises an error if transaction is already voided' do
-        stub_request(:post, "#{API_ROOT}/transaction/void").with(request)
+        stub_request(:post, "#{api_url}/transaction/void").with(request)
           .to_return(:status  => 400,
                      :body    => "",
                      :headers => {:error => "Transaction Already Void"})
