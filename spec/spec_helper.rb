@@ -5,9 +5,6 @@ require 'webmock/rspec'
 require 'json'
 require 'lib/arrow_payments'
 
-
-API_ROOT = "http://demo.arrowpayments.com/api"
-
 def fixture_path(filename=nil)
   path = File.expand_path("../fixtures", __FILE__)
   filename.nil? ? path : File.join(path, filename)
@@ -19,4 +16,18 @@ end
 
 def json_fixture(file)
   JSON.parse(fixture(file))
+end
+
+def api_url(path=nil)
+  url = "http://demo.arrowpayments.com/api"
+  url << path if path
+  url
+end
+
+def stub_api(method, path, options={})
+  options[:status]  ||= 200
+  options[:headers] ||= {}
+  options[:body]    ||= ""
+
+  stub_request(method, api_url(path)).to_return(options)
 end
