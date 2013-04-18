@@ -9,6 +9,8 @@ module ArrowPayments
       nil
     end
 
+    alias :get_transaction :transaction
+
     # Get customer transactions by status
     # @param [String] customer ID
     # @param [String] transaction status
@@ -21,6 +23,8 @@ module ArrowPayments
       resp = get("/customer/#{customer_id}/Transactions/#{status}")
       resp['Transactions'].map { |t| Transaction.new(t) }
     end
+
+    alias :get_transactions :transactions
 
     # Create a new transaction
     # @return [Transaction]

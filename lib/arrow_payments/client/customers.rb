@@ -6,6 +6,8 @@ module ArrowPayments
       get('/customers').map { |c| Customer.new(c) }
     end
 
+    alias :get_customer :customers
+
     # Get an existing customer
     # @param [Integer] customer ID
     # @return [Customer]
@@ -14,6 +16,8 @@ module ArrowPayments
     rescue NotFound
       nil
     end
+
+    alias :get_customer :customer
 
     # Create a new customer
     # @param [Hash] customer attributes
