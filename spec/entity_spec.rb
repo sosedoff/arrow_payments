@@ -44,7 +44,7 @@ describe ArrowPayments::Entity do
   describe '#to_source_hash' do
     it 'returns hash as source format' do
       entity = EntityTester.new(attributes)
-      hash = entity.to_source_hash
+      hash   = entity.to_source_hash
 
       hash.size.should eq(3)
       hash['Foo'].should eq('a')

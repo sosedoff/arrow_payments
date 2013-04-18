@@ -55,12 +55,12 @@ describe ArrowPayments::Transactions do
   describe '#create_transaction' do
     let(:payment_information) do
       {
-        :customer_id        => "10162",
-        :payment_method_id  => '0',
-        :transaction_type   => 'sale',
-        :total_amount       => 250,
-        :tax_amount         => 0,
-        :shipping_amount    => 0
+        :customer_id       => "10162",
+        :payment_method_id => '0',
+        :transaction_type  => 'sale',
+        :total_amount      => 250,
+        :tax_amount        => 0,
+        :shipping_amount   => 0
       }
     end
 
@@ -86,8 +86,8 @@ describe ArrowPayments::Transactions do
 
     it "raises an error if the payment method is not found" do
       stub_request(:post, "#{api_url}/transaction/add").with(request).
-        to_return(:status => 404, 
-                  :body => "", 
+        to_return(:status  => 404, 
+                  :body    => "", 
                   :headers => {:error => "Payment Method Not Found"})
       
       expect {client.create_transaction(payment_information) }.to raise_error "Payment Method Not Found"
