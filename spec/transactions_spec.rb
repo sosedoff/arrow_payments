@@ -73,10 +73,10 @@ describe ArrowPayments::Transactions do
 
     it "creates a new transaction record" do
       stub_request(:post, "#{api_url}/transaction/add").with(request).
-        to_return(:status  => 200, 
-                  :body    => fixture('transaction.json'), 
+        to_return(:status  => 200,
+                  :body    => fixture('transaction.json'),
                   :headers => {})
-      
+
       transaction = client.create_transaction(payment_information)
       transaction.should_not be_nil
       transaction.customer_name.should eq("First Supplies")
@@ -86,10 +86,10 @@ describe ArrowPayments::Transactions do
 
     it "raises an error if the payment method is not found" do
       stub_request(:post, "#{api_url}/transaction/add").with(request).
-        to_return(:status  => 404, 
-                  :body    => "", 
+        to_return(:status  => 404,
+                  :body    => "",
                   :headers => {:error => "Payment Method Not Found"})
-      
+
       expect {client.create_transaction(payment_information) }.to raise_error "Payment Method Not Found"
     end
   end
@@ -141,7 +141,7 @@ describe ArrowPayments::Transactions do
   end
 
   describe '#void_transaction' do
-    
+
     let(:request) do
       {
         :body    => "{\"TransactionId\":10162,\"ApiKey\":\"foobar\",\"MID\":\"foo\"}",
@@ -152,10 +152,10 @@ describe ArrowPayments::Transactions do
     context "successful request" do
       it 'voids transaction' do
         stub_request(:post, "#{api_url}/transaction/void").with(request).
-          to_return(:status  => 200, 
-                    :body    => fixture("void_transaction.json"), 
+          to_return(:status  => 200,
+                    :body    => fixture("void_transaction.json"),
                     :headers => {})
-      
+
         client.void_transaction(10162).should be_true
       end
     end
@@ -163,10 +163,10 @@ describe ArrowPayments::Transactions do
     context "unsuccessful requests" do
       it 'raises an error if transaction does not exist' do
         stub_request(:post, "#{api_url}/transaction/void").with(request).
-          to_return(:status  => 404, 
-                    :body    => "", 
+          to_return(:status  => 404,
+                    :body    => "",
                     :headers => {:error => "Transaction Not Found"})
-      
+
         expect { client.void_transaction(10162) }.to raise_error "Transaction Not Found"
       end
 
@@ -175,7 +175,7 @@ describe ArrowPayments::Transactions do
           .to_return(:status  => 400,
                      :body    => "",
                      :headers => {:error => "Transaction Already Void"})
-          
+
         expect { client.void_transaction(10162) }.to raise_error "Transaction Already Void"
       end
     end

@@ -1,4 +1,4 @@
-require 'spec_helper' 
+require 'spec_helper'
 
 describe ArrowPayments::Customer do
   it { should respond_to :id }
