@@ -17,8 +17,8 @@ gem 'arrow_payments', :github => 'sosedoff/arrow_payments'
 To configure gateway globally, add an initializer with the following:
 
 ```ruby
-ArrowPayments::Configuration.api_key = 'foo'
-ArrowPayments::Configuration.mode = 'production'
+ArrowPayments::Configuration.api_key     = 'foo'
+ArrowPayments::Configuration.mode        = 'production'
 ArrowPayments::Configuration.merchant_id = '1231231'
 ```
 
@@ -69,15 +69,15 @@ client.customer('12345')
 # Create a new customer. 
 # Raises ArrowPayments::Error if unable to create.
 customer = client.create_customer(
-  :name => 'John Doe',
+  :name    => 'John Doe',
   :contact => 'John Doe',
-  :code => 'JOHN',
-  :email => 'john@doe.com',
-  :phone => '(123) 123-12-12'
+  :code    => 'JOHN',
+  :email   => 'john@doe.com',
+  :phone   => '(123) 123-12-12'
 )
 
 # Update an existing customer
-customer = client.customer('12345')
+customer      = client.customer('12345')
 customer.name = 'Foo Bar'
 client.update_customer(customer) # => true
 
