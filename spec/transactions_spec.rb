@@ -11,11 +11,7 @@ describe ArrowPayments::Transactions do
 
   describe '#transaction' do
     it 'returns a transaction by ID' do
-      stub_api(:get, "/foobar/transaction/40023",
-        :status  => 200,
-        :body    => fixture('transaction.json'),
-        :headers => {}
-      )
+      stub_api(:get, "/foobar/transaction/40023", :body => fixture('transaction.json'))
 
       transaction = client.transaction('40023')
 
