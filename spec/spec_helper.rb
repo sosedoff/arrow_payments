@@ -23,3 +23,7 @@ def api_url(path=nil)
   url << path if path
   url
 end
+
+def stub_api(method, path, options={})
+  stub_request(method, api_url(path)).to_return(options)
+end
