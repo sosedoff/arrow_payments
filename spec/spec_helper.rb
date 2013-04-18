@@ -18,6 +18,8 @@ def json_fixture(file)
   JSON.parse(fixture(file))
 end
 
-def api_url
-  "http://demo.arrowpayments.com/api"
+def api_url(path=nil)
+  url = "http://demo.arrowpayments.com/api"
+  url << path if path
+  url
 end
