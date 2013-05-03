@@ -12,6 +12,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'webmock',   '~> 1.6'
   s.add_development_dependency 'rake',      '~> 0.9'
   s.add_development_dependency 'rspec',     '~> 2.12'
+  s.add_development_dependency 'simplecov', '~> 0.7'
   
   s.add_runtime_dependency 'faraday',            '~> 0.8'
   s.add_runtime_dependency 'faraday_middleware', '~> 0.8'
