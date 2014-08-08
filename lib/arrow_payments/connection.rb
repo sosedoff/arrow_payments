@@ -6,10 +6,10 @@ module ArrowPayments
     API_PRODUCTION = 'https://gateway.arrowpayments.com'
     API_SANDBOX = 'http://demo.arrowpayments.com'
 
-    CONNECTION_OPTIONS = {
-      :timeout      => 10,
-      :open_timeout => 10
-    }
+    CONNECTION_OPTIONS = {}
+    #  :timeout      => 10,
+    #  :open_timeout => 10
+    #}
 
     def get(path, params={}, raw=false)
       request(:get, path, params, raw)
