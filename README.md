@@ -2,6 +2,12 @@
 
 Ruby wrapper for [Arrow Payments](http://www.arrowpayments.com/) gateway
 
+## Status
+
+- [![Build Status](http://img.shields.io/travis/sosedoff/arrow_payments/master.svg?style=flat)](https://travis-ci.org/sosedoff/arrow_payments)
+- [![Code Climate](http://img.shields.io/codeclimate/github/sosedoff/arrow_payments.svg?style=flat)](https://codeclimate.com/github/sosedoff/arrow_payments)
+- [![Gem Version](http://img.shields.io/gem/v/arrow_payments.svg?style=flat)](http://rubygems.org/gems/arrow_payments)
+
 ## Installation
 
 Add dependency to your Gemfile:
