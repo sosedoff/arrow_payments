@@ -91,8 +91,7 @@ describe ArrowPayments::PaymentMethods do
     let(:request_headers) do
       {
         'Accept'       => '*/*', 
-        'Content-Type' => 'application/x-www-form-urlencoded', 
-        'User-Agent'   => 'Faraday v0.8.7'
+        'Content-Type' => 'application/x-www-form-urlencoded'
       }
     end
     
@@ -140,7 +139,7 @@ describe ArrowPayments::PaymentMethods do
       stub_request(:post, "https://secure.nmi.com/api/v2/three-step/4i873m0s").
         with(
           :body => {"billing-cc-exp"=>"1214", "billing-cc-number"=>"4111111111111111", "billing-cvv"=>"123", "billing-first-name"=>"John", "billing-last-name"=>"Doe"},
-          :headers => {'Accept'=>'*/*', 'Content-Type'=>'application/x-www-form-urlencoded', 'User-Agent'=>'Faraday v0.8.7'}
+          :headers => {'Accept'=>'*/*', 'Content-Type'=>'application/x-www-form-urlencoded'}
         ).
         to_return(
           :status  => 200, 
