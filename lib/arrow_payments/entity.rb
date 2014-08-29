@@ -26,7 +26,7 @@ module ArrowPayments
 
       if options[:from]
         @properties_map ||= {}
-        @properties_map[property_name.to_sym] = options[:from]
+        @properties_map[property_name.to_sym] = options[:from].to_s
       end
     end
 
