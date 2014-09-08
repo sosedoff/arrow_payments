@@ -1,21 +1,21 @@
-require 'faraday'
-require 'json'
+require "faraday"
+require "json"
 
 module ArrowPayments
   module Connection
-    API_PRODUCTION = 'https://gateway.arrowpayments.com'
-    API_SANDBOX = 'http://demo.arrowpayments.com'
+    API_PRODUCTION = "https://gateway.arrowpayments.com"
+    API_SANDBOX = "http://demo.arrowpayments.com"
 
     CONNECTION_OPTIONS = {
       :timeout      => 10,
       :open_timeout => 10
     }
 
-    def get(path, params={}, raw=false)
+    def get(path, params = {}, raw = false)
       request(:get, path, params, raw)
     end
 
-    def post(path, params={}, raw=false)
+    def post(path, params = {}, raw = false)
       request(:post, path, params, raw)
     end
 
@@ -25,19 +25,19 @@ module ArrowPayments
 
     protected
 
-    def request(method, path, params={}, raw=false)
+    def request(method, path, params = {}, raw = false)
       if method == :post
         path = "/api#{path}"
         
-        params['ApiKey'] = api_key
-        params['MID'] = merchant_id
+        params["ApiKey"] = api_key
+        params["MID"] = merchant_id
       else
         path = "/api/#{api_key}#{path}"
       end
 
       headers = {
-        'Accept'       => 'application/json',
-        'Content-Type' => 'application/json'
+        "Accept"       => "application/json",
+        "Content-Type" => "application/json"
       }
 
       api_url = production? ? API_PRODUCTION : API_SANDBOX
@@ -72,11 +72,11 @@ module ArrowPayments
     def handle_failed_response(response)
       case response.status
       when 400
-        raise ArrowPayments::BadRequest, response.headers['error']
+        raise ArrowPayments::BadRequest, response.headers["error"]
       when 404
-        raise ArrowPayments::NotFound, response.headers['error']
+        raise ArrowPayments::NotFound, response.headers["error"]
       when 500
-        raise ArrowPayments::Error, response.headers['error']
+        raise ArrowPayments::Error, response.headers["error"]
       end
     end
   end
